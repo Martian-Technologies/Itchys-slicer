@@ -4,9 +4,7 @@ import numpy as np
 
 
 class Exporter:
-    def startExport(self, allInstructionsArrays):
-        path = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Scrap Mechanic\\Data\\Importer\\"
-        filename = "Importer.json"
+    def startExport(self, allInstructionsArrays, filename, path):
 
         # if allInstructionsArrays is one file
         if len(allInstructionsArrays.shape) == 1:
@@ -27,11 +25,7 @@ class Exporter:
 
 
     def export(self, data, path, filename):
-        print(data)
-        print(dict(data))
         if not os.path.exists(path):
             os.makedirs(path)
-        for i in data:
-            dataDict[string(i)]
         with open(path + filename, "w") as f:
-            f.write(json.dumps(dict(data)))
+            f.write(json.dumps(list(data)))

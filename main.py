@@ -4,6 +4,9 @@ from util.exporter import *
 
 from slicers.tower_slicer import *
 
+path = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Scrap Mechanic\\Data\\Importer\\"
+filename = "Importer.json"
+
 selector = Selector()
 mesh = selector.select_3d_file()
 
@@ -15,4 +18,4 @@ voxels, newvVoxelPositions = slicer.slice(voxels, voxelPostions)
 allInstructionsArrays = slicer.cam(voxels)
 
 exporter = Exporter()
-exporter.startExport(allInstructionsArrays)
+exporter.startExport(allInstructionsArrays, filename, path)
