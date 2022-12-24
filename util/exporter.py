@@ -3,7 +3,7 @@ import os
 import numpy as np
 
 
-class Exporter:
+class Exporter(object):
     def __init__(self):
         self.path = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Scrap Mechanic\\Data\\Importer\\"
         self.filename = "Importer.json"
