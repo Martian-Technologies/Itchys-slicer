@@ -172,6 +172,7 @@ class Cartesian(object):
             dead = self.calculate_deadtime(passthroughs, print_head_x, print_head_y)
             time = dead[0]
             if time < best_time:
+                print(time)
                 best_time = time
                 best_pass = passthroughs.copy()
         rects = self.calculate_deadtime(best_pass, print_head_x, print_head_y)[2]
@@ -179,104 +180,104 @@ class Cartesian(object):
         block_id = {1: self.block, 2: self.support}
         for rect in rects:
             head_pos = rect['end']
-            if abs(rect['start'][0]-rect['end'][0]) == 0 and abs(rect['start'][1]-rect['end'][1]) == 0:
+            # if abs(rect['start'][0]-rect['end'][0]) == 0 and abs(rect['start'][1]-rect['end'][1]) == 0:
+            #     exp.add_instruction([
+            #         block_id[num],
+            #         rect['start'][0], rect['start'][1], z,
+            #         ])
+            # elif abs(rect['start'][0]-rect['end'][0] == 0 and abs(rect['start'][1]-rect['end'][1]) == 1):
+            #     exp.add_instruction([
+            #         block_id[num],
+            #         rect['start'][0], rect['start'][1], z,
+            #         ])
+            #     exp.add_instruction([
+            #         block_id[num],
+            #         rect['end'][0], rect['end'][1], z,
+            #         ])
+            # elif abs(rect['start'][0]-rect['end'][0] == 1 and abs(rect['start'][1]-rect['end'][1]) == 0):
+            #     exp.add_instruction([
+            #         block_id[num],
+            #         rect['start'][0], rect['start'][1], z,
+            #         ])
+            #     exp.add_instruction([
+            #         block_id[num],
+            #         rect['end'][0], rect['end'][1], z,
+            #         ])
+            # elif abs(rect['start'][0]-rect['end'][0]) == 1 and abs(rect['start'][1]-rect['end'][1]) == 1:
+            #     if rect['major'] == 'x':
+            #         exp.add_instruction([
+            #             block_id[num],
+            #             rect['start'][0], rect['start'][1], z,
+            #             ])
+            #         exp.add_instruction([
+            #             block_id[num],
+            #             rect['end'][0], rect['start'][1], z,
+            #             ])
+            #         exp.add_instruction([
+            #             block_id[num],
+            #             rect['end'][0], rect['end'][1], z,
+            #             ])
+            #         exp.add_instruction([
+            #             block_id[num],
+            #             rect['start'][0], rect['end'][1], z,
+            #             ])
+            #     else:
+            #         exp.add_instruction([
+            #             block_id[num],
+            #             rect['start'][0], rect['start'][1], z,
+            #             ])
+            #         exp.add_instruction([
+            #             block_id[num],
+            #             rect['start'][0], rect['end'][1], z,
+            #             ])
+            #         exp.add_instruction([
+            #             block_id[num],
+            #             rect['end'][0], rect['end'][1], z,
+            #             ])
+            #         exp.add_instruction([
+            #             block_id[num],
+            #             rect['end'][0], rect['start'][1], z,
+            #             ])
+            # else:
+            if self.option2 == 'rect':
                 exp.add_instruction([
                     block_id[num],
                     rect['start'][0], rect['start'][1], z,
-                    ])
-            elif abs(rect['start'][0]-rect['end'][0] == 0 and abs(rect['start'][1]-rect['end'][1]) == 1):
-                exp.add_instruction([
-                    block_id[num],
-                    rect['start'][0], rect['start'][1], z,
-                    ])
-                exp.add_instruction([
-                    block_id[num],
                     rect['end'][0], rect['end'][1], z,
-                    ])
-            elif abs(rect['start'][0]-rect['end'][0] == 1 and abs(rect['start'][1]-rect['end'][1]) == 0):
-                exp.add_instruction([
-                    block_id[num],
-                    rect['start'][0], rect['start'][1], z,
-                    ])
-                exp.add_instruction([
-                    block_id[num],
-                    rect['end'][0], rect['end'][1], z,
-                    ])
-            elif abs(rect['start'][0]-rect['end'][0]) == 1 and abs(rect['start'][1]-rect['end'][1]) == 1:
+                    0 if rect['major'] == 'x' else 1
+                ])
+            elif self.option2 == 'line':
                 if rect['major'] == 'x':
-                    exp.add_instruction([
-                        block_id[num],
-                        rect['start'][0], rect['start'][1], z,
-                        ])
-                    exp.add_instruction([
-                        block_id[num],
-                        rect['end'][0], rect['start'][1], z,
-                        ])
-                    exp.add_instruction([
-                        block_id[num],
-                        rect['end'][0], rect['end'][1], z,
-                        ])
-                    exp.add_instruction([
-                        block_id[num],
-                        rect['start'][0], rect['end'][1], z,
-                        ])
+                    x1 = rect['start'][0]
+                    x2 = rect['end'][0]
+                    for y in range(rect['start'][1], rect['end'][1]+1):
+                        exp.add_instruction([
+                            block_id[num],
+                            x1, y, z,
+                            x2, y, z
+                            ])
+                        x1, x2 = x2, x1
                 else:
-                    exp.add_instruction([
-                        block_id[num],
-                        rect['start'][0], rect['start'][1], z,
-                        ])
-                    exp.add_instruction([
-                        block_id[num],
-                        rect['start'][0], rect['end'][1], z,
-                        ])
-                    exp.add_instruction([
-                        block_id[num],
-                        rect['end'][0], rect['end'][1], z,
-                        ])
-                    exp.add_instruction([
-                        block_id[num],
-                        rect['end'][0], rect['start'][1], z,
-                        ])
-            else:
-                if self.option2 == 'rect':
-                    exp.add_instruction([
-                        block_id[num],
-                        rect['start'][0], rect['start'][1], z,
-                        rect['end'][0], rect['end'][1], z,
-                        0 if rect['major'] == 'x' else 1
-                    ])
-                elif self.option2 == 'line':
-                    if rect['major'] == 'x':
-                        x1 = rect['start'][0]
-                        x2 = rect['end'][0]
-                        for y in range(rect['start'][1], rect['end'][1]+1):
+                    y1 = rect['start'][1]
+                    y2 = rect['end'][1]
+                    for x in range(rect['start'][0], rect['end'][0]+1):
+                        exp.add_instruction([
+                            block_id[num],
+                            x, y1, z,
+                            x, y2, z
+                            ])
+                        y1, y2 = y2, y1
+            elif self.option2 == 'none':
+                if rect['major'] == 'x':
+                    x1 = rect['start'][0]
+                    x2 = rect['end'][0]
+                    for y in range(rect['start'][1], rect['end'][1]+1):
+                        for x in (range(x1, x2+1) if x1<x2 else range(x2, x1-1, -1)):
                             exp.add_instruction([
                                 block_id[num],
-                                x1, y, z,
-                                x2, y, z
+                                x, y, z
                                 ])
-                            x1, x2 = x2, x1
-                    else:
-                        y1 = rect['start'][1]
-                        y2 = rect['end'][1]
-                        for x in range(rect['start'][0], rect['end'][0]+1):
-                            exp.add_instruction([
-                                block_id[num],
-                                x, y1, z,
-                                x, y2, z
-                                ])
-                            y1, y2 = y2, y1
-                elif self.option2 == 'none':
-                    if rect['major'] == 'x':
-                        x1 = rect['start'][0]
-                        x2 = rect['end'][0]
-                        for y in range(rect['start'][1], rect['end'][1]+1):
-                            for x in (range(x1, x2+1) if x1<x2 else range(x2, x1-1, -1)):
-                                exp.add_instruction([
-                                    block_id[num],
-                                    x, y, z
-                                    ])
-                            x1, x2 = x2, x1
+                        x1, x2 = x2, x1
         return head_pos
 
     def calculate_deadtime(self, passthroughs, current_head_x, current_head_y):
