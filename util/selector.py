@@ -1,6 +1,7 @@
 import trimesh
 import customtkinter as ctk
 
+
 class Selector:
     def select_3d_file(self):
         filename = ctk.filedialog.askopenfilename(
@@ -16,7 +17,6 @@ class Selector:
                     raise Exception('Failed to load file:\n{e}')
             else:
                 raise Exception('Unsupported file format:\n.{extension}')
-
 
     def checkIfFlip(self, mesh):
         mesh.show()

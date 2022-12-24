@@ -9,13 +9,13 @@ class Voxelizer:
 
     def voxelize(self, mesh, pitch):
         return voxelize(mesh, pitch)
-        
+
     def fixVoxels(self, voxels):
         voxels.show()
         v_shape = voxels.shape
         voxels = voxels.points_to_indices(voxels.points)
 
-        voxelPostions = np.empty([len(voxels),3], dtype=int)
+        voxelPostions = np.empty([len(voxels), 3], dtype=int)
         for i in range(len(voxels)):
             voxelPostions[i] = [voxels[i][0], voxels[i][2], voxels[i][1] + 1]
 
@@ -23,5 +23,5 @@ class Voxelizer:
         for i in range(len(voxelPostions)):
             vox = voxelPostions[i]
             voxels[vox[2]][vox[1]][vox[0]] = 1
+
         return voxels, voxelPostions
-    
