@@ -20,7 +20,7 @@ class Exporter:
             print('path: ' + path)
             doExports = 'y' == input(f'export {len(allInstructionsArrays)} instructions (y/n): ')
             if doExports:
-                for i in range(len(allInstructionsArrays)-1):
+                for i in range(len(allInstructionsArrays)):
                     doExport = 'y' == input(f'export instructions {i+1}/{len(allInstructionsArrays)} into {filename} (y/n): ')
                     if doExport:
                         self.export(allInstructionsArrays[i], path, filename)
@@ -31,5 +31,7 @@ class Exporter:
         print(dict(data))
         if not os.path.exists(path):
             os.makedirs(path)
+        for i in data:
+            dataDict[string(i)]
         with open(path + filename, "w") as f:
             f.write(json.dumps(dict(data)))

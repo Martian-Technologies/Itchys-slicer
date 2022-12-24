@@ -10,8 +10,8 @@ class Legacy:
         self.encodedInstructions = np.append(self.encodedInstructions,
             pos[0]+
             pos[1]*xyzScail+
-            pos[2]*xyzScail^2+
-            command
+            pos[2]*xyzScail**2+
+            command**3
         )
     
     def getInstructions(self):

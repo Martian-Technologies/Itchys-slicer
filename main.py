@@ -11,7 +11,7 @@ voxelizer = Voxelizer()
 voxels, voxelPostions = voxelizer.fixVoxels(voxelizer.voxelize(mesh, 1))
 
 slicer = TowerSlicer()
-voxels, voxelPostions = slicer.slice(voxels, voxelPostions)
+voxels, newvVoxelPositions = slicer.slice(voxels, voxelPostions)
 allInstructionsArrays = slicer.cam(voxels)
 
 exporter = Exporter()
