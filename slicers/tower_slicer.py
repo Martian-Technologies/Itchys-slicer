@@ -52,6 +52,7 @@ class TowerSlicer:
                 allInstructionsArrays.append(
                     allInstructions[i].getInstructions())
         else:
+            allInstructions[0].addInstruction([0, 0, 0], 3, 256)
             allInstructionsArrays = allInstructions[0].getInstructions()
 
         return allInstructionsArrays
