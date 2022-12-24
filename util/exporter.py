@@ -5,7 +5,6 @@ import numpy as np
 
 class Exporter:
     def startExport(self, allInstructionsArrays, filename, path):
-
         # if allInstructionsArrays is one file
         if len(allInstructionsArrays.shape) == 1:
             print('path: ' + path)
@@ -22,6 +21,7 @@ class Exporter:
                     doExport = 'y' == input(f'export instructions {i+1}/{len(allInstructionsArrays)} into {filename} (y/n): ')
                     if doExport:
                         self.export(allInstructionsArrays[i], path, filename)
+
 
 
     def export(self, data, path, filename):
