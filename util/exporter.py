@@ -20,8 +20,6 @@ class Exporter(object):
             doExport = 'y' == input(f'export instructions into {self.filename} (y/n): ')
             if doExport:
                 self.export(allInstructionsArrays, self.path, self.filename)
-        self.path = startpath
-        self.filename = startfilename
 
         # if allInstructionsArrays is two files
         else:
@@ -32,6 +30,8 @@ class Exporter(object):
                     doExport = 'y' == input(f'export instructions {i+1}/{len(allInstructionsArrays)} into {self.filename} (y/n): ')
                     if doExport:
                         self.export(allInstructionsArrays[i])
+        self.path = startpath
+        self.filename = startfilename
 
 
     def export(self, data):
