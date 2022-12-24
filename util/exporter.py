@@ -7,7 +7,13 @@ class Exporter(object):
     def __init__(self, altpath=None, altfilename=None):
         self.path = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Scrap Mechanic\\Data\\Importer\\" if altpath == None else altpath
         self.filename = "Importer.json" if altfilename == None else altfilename
-    def startExport(self, allInstructionsArrays):
+    def startExport(self, allInstructionsArrays, altpath=None, altfilename=None):
+        startpath = self.path
+        startfilename = self.filename
+        if altpath != None:
+            self.path = altpath
+        if altfilename != None:
+            self.filename = altfilename
         # if allInstructionsArrays is one file
         if len(allInstructionsArrays.shape) == 1:
             print('path: ' + self.path)
