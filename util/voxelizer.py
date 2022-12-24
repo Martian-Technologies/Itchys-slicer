@@ -11,7 +11,7 @@ class Voxelizer:
         return voxelize(mesh, pitch)
 
     def fixVoxels(self, voxels):
-        voxels.show()
+        # voxels.show()
         v_shape = voxels.shape
         voxels = voxels.points_to_indices(voxels.points)
 

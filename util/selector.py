@@ -3,9 +3,9 @@ import customtkinter as ctk
 
 
 class Selector:
-    def select_3d_file(self):
+    def select_3d_file(self, file=None):
         filename = ctk.filedialog.askopenfilename(
-            title='Select 3D File', filetypes=(('3D object', '*.obj;*.stl;*.ply;*.glb'), ('All files', '*.*')))
+            title='Select 3D File', filetypes=(('3D object', '*.obj;*.stl;*.ply;*.glb'), ('All files', '*.*'))) if file is None else file
         if filename:
             extension = filename.split('.')[-1]
             if extension in ['obj', 'stl', 'ply', 'glb']:
@@ -17,7 +17,8 @@ class Selector:
                     raise Exception('Failed to load file:\n{e}')
             else:
                 raise Exception('Unsupported file format:\n.{extension}')
-
+        else:
+            raise Exception('No file selected')
     def checkIfFlip(self, mesh):
         mesh.show()
         doflip = 'y' == input('do you want to flip the y and z axes (y/n): ')
