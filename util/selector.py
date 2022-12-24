@@ -19,6 +19,7 @@ class Selector:
                 raise Exception('Unsupported file format:\n.{extension}')
         else:
             raise Exception('No file selected')
+
     def checkIfFlip(self, mesh):
         mesh.show()
         doflip = 'y' == input('do you want to flip the y and z axes (y/n): ')

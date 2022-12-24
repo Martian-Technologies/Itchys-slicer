@@ -5,8 +5,9 @@ import numpy as np
 
 class Exporter:
     def startExport(self, allInstructionsArrays, path, filename):
+
         # if allInstructionsArrays is one file
-        if len(allInstructionsArrays.shape) == 1:
+        if type(allInstructionsArrays[0]) != list:
             print('path: ' + path)
             doExport = 'y' == input(
                 f'export instructions into {filename} (y/n): ')

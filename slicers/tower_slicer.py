@@ -32,7 +32,8 @@ class TowerSlicer:
         for z in range(len(voxels)):
             for y in range(len(voxels[z])):
                 for x in range(len(voxels[z][y])):
-                    allInstructionsArrays_Cords.append(f"{x+2}, {y+2}, {z}, {voxels[z][y][x]}")
+                    allInstructionsArrays_Cords.append(
+                        f"{x+2}, {y+2}, {z}, {voxels[z][y][x]}")
                     if voxels[z][y][x] == 1:
                         allInstructions[headNumber].addInstruction(
                             [x+2, y+2, z], 0, 256)
@@ -42,11 +43,15 @@ class TowerSlicer:
                     headNumber = headNumber + 1
                     if headNumber >= len(allInstructions):
                         headNumber = 0
-        
-        allInstructionsArrays = np.empty(0, dtype=np.ndarray)
-        for i in range(len(allInstructions)):
-            allInstructions[i].addInstruction([0, 0, 0], 3, 256)
-            allInstructionsArrays = np.append(
-                allInstructionsArrays, allInstructions[i].getInstructions())
+
+        allInstructionsArrays = None
+        if len(allInstructions) > 1:
+            allInstructionsArrays = []
+            for i in range(len(allInstructions)):
+                allInstructions[i].addInstruction([0, 0, 0], 3, 256)
+                allInstructionsArrays.append(
+                    allInstructions[i].getInstructions())
+        else:
+            allInstructionsArrays = allInstructions[0].getInstructions()
 
         return allInstructionsArrays
