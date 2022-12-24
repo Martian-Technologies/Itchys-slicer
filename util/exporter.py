@@ -4,11 +4,10 @@ import numpy as np
 
 
 class Exporter(object):
-    def __init__(self):
-        self.path = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Scrap Mechanic\\Data\\Importer\\"
-        self.filename = "Importer.json"
+    def __init__(self, altpath=None, altfilename=None):
+        self.path = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Scrap Mechanic\\Data\\Importer\\" if altpath == None else altpath
+        self.filename = "Importer.json" if altfilename == None else altfilename
     def startExport(self, allInstructionsArrays):
-
         # if allInstructionsArrays is one file
         if len(allInstructionsArrays.shape) == 1:
             print('path: ' + self.path)
