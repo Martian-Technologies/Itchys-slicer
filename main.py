@@ -17,7 +17,7 @@ voxelizer = Voxelizer()
 voxels, voxelPostions = voxelizer.fixVoxels(voxelizer.voxelize(mesh, 1))
 
 # uses a slicer to slice/cam the 3d file
-slicer = Cartesian('line')
+slicer = Cartesian('line', block=0, support=1)
 voxels, newvVoxelPositions = slicer.slice(voxels, voxelPostions)
 allInstructionsArrays = slicer.cam(voxels)
 
