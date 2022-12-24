@@ -4,34 +4,35 @@ import numpy as np
 
 
 class Exporter:
+    def __init__(self):
+        self.path = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Scrap Mechanic\\Data\\Importer\\"
+        self.filename = "Importer.json"
     def startExport(self, allInstructionsArrays):
-        path = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Scrap Mechanic\\Data\\Importer\\"
-        filename = "Importer.json"
 
         # if allInstructionsArrays is one file
         if len(allInstructionsArrays.shape) == 1:
-            print('path: ' + path)
-            doExport = 'y' == input(f'export instructions into {filename} (y/n): ')
+            print('path: ' + self.path)
+            doExport = 'y' == input(f'export instructions into {self.filename} (y/n): ')
             if doExport:
-                self.export(allInstructionsArrays, path, filename)
+                self.export(allInstructionsArrays, self.path, self.filename)
 
         # if allInstructionsArrays is two files
         else:
-            print('path: ' + path)
+            print('path: ' + self.path)
             doExports = 'y' == input(f'export {len(allInstructionsArrays)} instructions (y/n): ')
             if doExports:
                 for i in range(len(allInstructionsArrays)):
-                    doExport = 'y' == input(f'export instructions {i+1}/{len(allInstructionsArrays)} into {filename} (y/n): ')
+                    doExport = 'y' == input(f'export instructions {i+1}/{len(allInstructionsArrays)} into {self.filename} (y/n): ')
                     if doExport:
-                        self.export(allInstructionsArrays[i], path, filename)
+                        self.export(allInstructionsArrays[i])
 
 
-    def export(self, data, path, filename):
+    def export(self, data):
         print(data)
-        print(dict(data))
-        if not os.path.exists(path):
-            os.makedirs(path)
-        for i in data:
-            dataDict[string(i)]
-        with open(path + filename, "w") as f:
-            f.write(json.dumps(dict(data)))
+        # print(dict(data))
+        if not os.path.exists(self.path):
+            os.makedirs(self.path)
+        # for i in data:
+        #     dataDict[string(i)]
+        with open(self.path + self.filename, "w") as f:
+            f.write(json.dumps(list(data)))
