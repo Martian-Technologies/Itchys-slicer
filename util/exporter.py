@@ -13,7 +13,7 @@ class Exporter:
             if doExport:
                 self.export(allInstructionsArrays, path, filename)
 
-        # if allInstructionsArrays is two files
+        # if allInstructionsArrays is more than one file
         else:
             print('path: ' + path)
             doExports = 'y' == input(f'export {len(allInstructionsArrays)} instructions (y/n): ')

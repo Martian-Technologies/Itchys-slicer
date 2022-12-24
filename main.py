@@ -9,7 +9,7 @@ filename = "Importer.json"
 
 selector = Selector()
 mesh = selector.select_3d_file()
-
+print(type(mesh))
 voxelizer = Voxelizer()
 voxels, voxelPostions = voxelizer.fixVoxels(voxelizer.voxelize(mesh, 1))
 
