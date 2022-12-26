@@ -1,6 +1,3 @@
-import numpy as np
-
-
 class Legacy:
     def __init__(self) -> None:
         self.encodedInstructions = []

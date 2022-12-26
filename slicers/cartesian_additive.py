@@ -10,6 +10,7 @@ class Cartesian(object):
         if option2 not in ['none', 'line', 'rect']:
             raise Exception(
                 'Invalid option2, must be one of: none, line, rect. Received {}'.format(option2))
+
         self.option2 = option2
 
     def slice(self, voxels, voxelPositions):
@@ -17,6 +18,7 @@ class Cartesian(object):
         for vox in voxelPositions:
             voxels, newvVoxelPositions = self.checkPosition(
                 voxels, vox, newvVoxelPositions)
+
         return voxels, newvVoxelPositions
 
     def checkPosition(self, voxels, vox, newvVoxelPositions):
@@ -27,6 +29,7 @@ class Cartesian(object):
                 newvVoxelPositions = np.append(newvVoxelPositions, vox)
                 voxels, newvVoxelPositions = self.checkPosition(
                     voxels, vox, newvVoxelPositions)
+
         return voxels, newvVoxelPositions
 
     def cam(self, voxels):
@@ -44,6 +47,7 @@ class Cartesian(object):
                 while layer[pos[1]][pos[0]] == 0:
                     pos = (random.randint(
                         0, len(layer[0])-1), random.randint(0, len(layer)-1))
+
                 rect = [layer[pos[1]][pos[0]], pos[0], pos[1], pos[0], pos[1]]
                 pos_x_fail = False
                 pos_y_fail = False
@@ -53,60 +57,80 @@ class Cartesian(object):
                     for y in range(rect[2], rect[4]+1):
                         if pos_x_fail:
                             break
+
                         if rect[3] >= len(layer[0])-1:
                             pos_x_fail = True
                             break
+
                         if layer[y][rect[3]+1] != rect[0]:
                             pos_x_fail = True
                             break
+
                     if not pos_x_fail:
                         rect[3] += 1
+
                     for y in range(rect[2], rect[4]+1):
                         if neg_x_fail:
                             break
+
                         if rect[1] <= 0:
                             neg_x_fail = True
                             break
+
                         if layer[y][rect[1]-1] != rect[0]:
                             neg_x_fail = True
                             break
+
                     if not neg_x_fail:
                         rect[1] -= 1
+
                     for x in range(rect[1], rect[3]+1):
                         if pos_y_fail:
                             break
+
                         if rect[4] >= len(layer)-1:
                             pos_y_fail = True
                             break
+
                         if layer[rect[4]+1][x] != rect[0]:
                             pos_y_fail = True
                             break
+
                     if not pos_y_fail:
                         rect[4] += 1
+
                     for x in range(rect[1], rect[3]+1):
                         if neg_y_fail:
                             break
+
                         if rect[2] <= 0:
                             neg_y_fail = True
                             break
+
                         if layer[rect[2]-1][x] != rect[0]:
                             neg_y_fail = True
                             break
+
                     if not neg_y_fail:
                         rect[2] -= 1
+
                 for y in range(rect[2], rect[4]+1):
                     for x in range(rect[1], rect[3]+1):
                         layer[y][x] = 0
+
                 rectangles.append(rect)
                 # print(rect)
+
             for rect in rectangles:
                 print(rect)
+
             head = self.encode(2, rectangles, exp,
                                print_head_x, print_head_y, z)
             print_head_x, print_head_y = head
             head = self.encode(1, rectangles, exp,
                                print_head_x, print_head_y, z)
             print_head_x, print_head_y = head
+
         return exp.get_instructions()
 
     def encode(self, num, rectangles, exp, print_head_x, print_head_y, z):
@@ -124,6 +148,7 @@ class Cartesian(object):
                     major = 'y'
                     major_width = y_width
                     minor_width = x_width
+
                 if major == 'x':
                     portals.append({
                         'x1': rect[1],
@@ -150,6 +175,7 @@ class Cartesian(object):
                         'x2': rect[3],
                         'y2': rect[4] if minor_width % 2 == 0 else rect[2]
                     })
+
                 passthroughs.append({
                     'block': num,
                     'x1': rect[1],
@@ -159,8 +185,10 @@ class Cartesian(object):
                     'major': major,
                     'portals': portals
                 })
+
         if len(passthroughs) == 0:
             return print_head_x, print_head_y
+
         best_time = self.calculate_deadtime(
             passthroughs, print_head_x, print_head_y)[0]
         best_pass = passthroughs.copy()
@@ -173,6 +201,7 @@ class Cartesian(object):
                 print(time)
                 best_time = time
                 best_pass = passthroughs.copy()
+
         for i in range(10000):
             a = random.randint(0, len(passthroughs)-1)
             b = random.randint(0, len(passthroughs)-1)
@@ -184,6 +213,7 @@ class Cartesian(object):
                 print(time)
                 best_time = time
                 best_pass = passthroughs.copy()
+
         rects = self.calculate_deadtime(
             best_pass, print_head_x, print_head_y)[2]
         head_pos = (print_head_x, print_head_y)
@@ -303,10 +333,12 @@ class Cartesian(object):
                 if shortest_travel is None or travel < shortest_travel[0]:
                     shortest_travel = (
                         travel, (portal['x2'], portal['y2']), (portal['x1'], portal['y1']))
+
                 travel = max(abs(portal['x2']-pos_x), abs(portal['y2']-pos_y))
                 if shortest_travel is None or travel < shortest_travel[0]:
                     shortest_travel = (
                         travel, (portal['x1'], portal['y1']), (portal['x2'], portal['y2']))
+
             deadtime.append(shortest_travel[0])
             pos_x = shortest_travel[1][0]
             pos_y = shortest_travel[1][1]
