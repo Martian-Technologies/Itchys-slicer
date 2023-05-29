@@ -4,7 +4,7 @@ import numpy as np
 
 
 class Exporter:
-    
+
     def startExport(self, allInstructionsArrays, path, filename):
         """starts the process of exporting to SM"""
         # if allInstructionsArrays is one file

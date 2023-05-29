@@ -1,5 +1,6 @@
 import numpy as np
 
+
 class Gigachad:
     def slice(self, voxels, voxelPositions):
         newvVoxelPositions = voxelPositions.copy()
@@ -17,7 +18,7 @@ class Gigachad:
                 voxels, newvVoxelPositions = self.checkPosition(
                     voxels, vox, newvVoxelPositions)
         return voxels, newvVoxelPositions
-    
+
     def cam(self, voxels):
         commands = []
         for z in range(len(voxels)):

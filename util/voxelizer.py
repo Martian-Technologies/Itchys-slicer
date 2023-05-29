@@ -7,7 +7,26 @@ class Voxelizer:
     def __init__(self) -> None:
         pass
 
-    def voxelize(self, mesh, pitch, invert_yz=False):
+    def voxelize(self, mesh, pitch=None, max_x=None, max_y=None, max_z=None, invert_yz=False):
+        max_pitch = pitch if pitch is not None else 0
+        if max_x is not None:
+            # get x_size of mesh
+            x_size = mesh.bounds[1][0] - mesh.bounds[0][0]
+            # get max pitch
+            max_pitch = max(max_pitch, x_size / max_x)
+        if max_y is not None:
+            # get y_size of mesh
+            y_size = mesh.bounds[1][1] - mesh.bounds[0][1]
+            # get max pitch
+            max_pitch = max(max_pitch, y_size / max_y)
+        if max_z is not None:
+            # get z_size of mesh
+            z_size = mesh.bounds[1][2] - mesh.bounds[0][2]
+            # get max pitch
+            max_pitch = max(max_pitch, z_size / max_z)
+        print(max_pitch)
+        if max_pitch == 0:
+            max_pitch = 1
         if invert_yz:
             mesh_copy = mesh.copy()
             verts = mesh_copy.vertices
@@ -15,9 +34,9 @@ class Voxelizer:
             new_verts[:, 1] = verts[:, 2]
             new_verts[:, 2] = verts[:, 1]
             mesh_copy.vertices = new_verts
-            return voxelize(mesh_copy, pitch)
+            return voxelize(mesh_copy, max_pitch)
         else:
-            return voxelize(mesh, pitch)
+            return voxelize(mesh, max_pitch)
 
     def fixVoxels(self, voxels):
         voxels.show()
