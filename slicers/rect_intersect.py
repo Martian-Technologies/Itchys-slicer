@@ -105,9 +105,10 @@ class RectIntersect:
         current_grid = self.flip_vals(
             [[0]*len(voxels[0][0])]*len(voxels[0]), 1, 2)
         for z in range(len(voxels)):
+            print(z)
             grid = self.flip_vals(voxels[z], 1, 2)
             steps = RectIntersect.calculate_absolute_delta_steps(
-                current_grid, grid, 3)
+                current_grid, grid, 4)
             for step in steps:
                 cmd = list(step[0]) + list(step[1]) + [0, 0]
                 command_lines.append(cmd)

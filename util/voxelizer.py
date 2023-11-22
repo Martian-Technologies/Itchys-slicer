@@ -9,6 +9,8 @@ class Voxelizer:
 
     def voxelize(self, mesh, pitch=None, max_x=None, max_y=None, max_z=None, invert_yz=False):
         max_pitch = pitch if pitch is not None else 0
+        if invert_yz:
+            max_y, max_z = max_z, max_y
         if max_x is not None:
             # get x_size of mesh
             x_size = mesh.bounds[1][0] - mesh.bounds[0][0]
@@ -53,11 +55,12 @@ class Voxelizer:
             voxels[vox[2]][vox[1]][vox[0]] = 1
 
         return voxels, voxelPostions
-    
+
     def move_to_center(self, voxels, voxelPostions, build_plate):
         # print(voxels)
 
-        new_voxels = np.zeros([voxels.shape[0], build_plate[1], build_plate[0]])
+        new_voxels = np.zeros(
+            [voxels.shape[0], build_plate[1], build_plate[0]])
         x_offset = int((build_plate[0] - voxels.shape[2]) / 2)
         y_offset = int((build_plate[1] - voxels.shape[1]) / 2)
         voxelPostions[:, 0] += x_offset
