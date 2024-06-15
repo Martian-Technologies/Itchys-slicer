@@ -14,7 +14,7 @@ from slicers.niknal_vanilla_v1_slicer import *
 
 # gets the 3d file
 selector = Selector()
-mesh = selector.select_3d_file(file='3D_models/generation hunter.stl')
+mesh = selector.select_3d_file() #file='3D_models/Amogus.stl'
 
 # Voxelizes the 3d file
 voxelizer = Voxelizer()
@@ -25,10 +25,10 @@ voxels, voxelPostions = voxelizer.move_to_center(
 
 # print(voxels[1])
 # uses a slicer to slice/cam the 3d file
-slicer = NiknalVanillaV1Slicer()
+slicer = Cartesian()
 voxels, newvVoxelPositions = slicer.slice(voxels, voxelPostions)
 allInstructionsArrays = slicer.cam(voxels)
 
 # exports the intructions to path, filename
-exporter = VanillaExporter()
+exporter = Legacy()
 exporter.startExport(allInstructionsArrays, '.\\', 'vanilla_tt.json')

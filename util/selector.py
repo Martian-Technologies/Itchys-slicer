@@ -5,7 +5,7 @@ import customtkinter as ctk
 class Selector:
     def select_3d_file(self, file=None):
         filename = ctk.filedialog.askopenfilename(
-            title='Select 3D File', filetypes=(('3D object', '*.obj;*.stl;*.ply;*.glb'), ('All files', '*.*'))) if file is None else file
+            title='Select 3D File') if file is None else file #, filetypes=(('3D object', '*.obj;*.stl;*.ply;*.glb'), ('All files', '*.*'))
         if filename:
             extension = filename.split('.')[-1]
             if extension in ['obj', 'stl', 'ply', 'glb']:
