@@ -38,8 +38,8 @@ class Cartesian(object):
         print_head_y = 0
         for z, layer_og in enumerate(voxels):
             layer = layer_og.copy()
-            print('-'*100)
-            print(layer)
+            # print('-'*100)
+            # print(layer)
             rectangles = []
             while np.sum(layer) > 0:
                 pos = (random.randint(
@@ -122,7 +122,8 @@ class Cartesian(object):
                 # print(rect)
 
             for rect in rectangles:
-                print(rect)
+                # print(rect)
+                pass
 
             head = self.encode(2, rectangles, exp,
                                print_head_x, print_head_y, z)
@@ -192,7 +193,7 @@ class Cartesian(object):
         best_time = self.calculate_deadtime(
             passthroughs, print_head_x, print_head_y)[0]
         best_pass = passthroughs.copy()
-        for i in range(10000):
+        for i in range(1000):
             random.shuffle(passthroughs)
             dead = self.calculate_deadtime(
                 passthroughs, print_head_x, print_head_y)

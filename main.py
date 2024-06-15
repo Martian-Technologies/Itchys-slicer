@@ -25,7 +25,7 @@ voxels, voxelPostions = voxelizer.move_to_center(
 
 # print(voxels[1])
 # uses a slicer to slice/cam the 3d file
-slicer = Cartesian()
+slicer = Cartesian("none")
 voxels, newvVoxelPositions = slicer.slice(voxels, voxelPostions)
 allInstructionsArrays = slicer.cam(voxels)
 
