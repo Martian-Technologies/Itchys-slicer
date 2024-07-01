@@ -33,7 +33,11 @@ class Exporter:
         #                 self.export(allInstructionsArrays[i], path, filename)
 
     def export(self, data, path):
-        if not os.path.exists(path):
-            os.makedirs(path)
+        opath = str(path)
+        opath = opath.replace("\\", "/")
+        m = opath.split("/")
+        mpath = "/".join(m[:-1])
+        if not os.path.exists(mpath):
+            os.makedirs(mpath)
         with open(path, "w") as f:
             f.write(json.dumps(list(data)))
