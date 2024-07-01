@@ -40,4 +40,4 @@ class Exporter:
         if not os.path.exists(mpath):
             os.makedirs(mpath)
         with open(path, "w") as f:
-            f.write(json.dumps(list(data)))
+            f.write(json.dumps(data))
